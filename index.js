@@ -362,12 +362,7 @@ app.get('/auth', (req, res) => {
 });
 
 // ── Health & root ──────────────────────────────────────────────────────────
-app.get('/health', async (req, res) => {
-  let tokenOk = false;
-  try {
-    const token = await getParam('salla.access_token');
-    tokenOk = !!(token && String(token).length > 100);
-  } catch {}
+app.get('/health', (req, res) => {
   res.json({
     status: 'ok', time: new Date().toISOString(),
     odoo: ODOO_URL, tokenOk,
