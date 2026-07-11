@@ -336,7 +336,7 @@ app.get('/callback', async (req, res) => {
   if (!CLIENT_SECRET) return res.send('<h2>SALLA_CLIENT_SECRET not set</h2>');
 
   try {
-    const redirectUri = `${req.protocol}://${req.get('host')}/callback`;
+    const redirectUri = `https://${req.get('host')}/callback`;
     const body = new URLSearchParams({
       grant_type: 'authorization_code',
       client_id: CLIENT_ID, client_secret: CLIENT_SECRET,
@@ -357,7 +357,9 @@ app.get('/callback', async (req, res) => {
 
 app.get('/auth', (req, res) => {
   if (!CLIENT_SECRET) return res.send('<h2>SALLA_CLIENT_SECRET not set</h2>');
-  const redirectUri = encodeURIComponent(`${req.protocol}://${req.get('host')}/callback`);
+  // Always use https behind Railway proxy
+  const host = req.get('host');
+  const redirectUri = encodeURIComponent(`https://${host}/callback`);
   res.redirect(`https://accounts.salla.sa/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=offline_access&state=abajur`);
 });
 
