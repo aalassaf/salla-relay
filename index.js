@@ -365,7 +365,7 @@ app.get('/auth', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok', time: new Date().toISOString(),
-    odoo: ODOO_URL, tokenOk,
+    odoo: ODOO_URL,
     clientSecretSet: !!CLIENT_SECRET, odooPassSet: !!ODOO_PASS,
     webhookSecretSet: !!WEBHOOK_SECRET,
   });
